@@ -1,9 +1,7 @@
 #!/bin/bash
 
 python3 api/api.py > /dev/null 2>&1 
-# redirects program output to /dev/null which accepts and discards all input (produces no output)
-# then we redirect error output as well by redirecting standard error (2) to standard out (1)
-# this eliminates all prints from api.py optimizing our program for benchmarking
+
 
 pytest ./tests
 # we then call pytest on our test suite to perform unit tests and benchmarking

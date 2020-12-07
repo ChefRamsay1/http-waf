@@ -5,7 +5,7 @@ a simple http application to determine if a json request { is_malicious: true } 
 # To Run and Test Locally:
 1. Download or clone http-waf
 
-3. To install pip project dependencies execute:
+3. From root project directory, install pip project dependencies by executing:
 ```
 ./bin/setup
 ```

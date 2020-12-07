@@ -5,7 +5,7 @@ A simple http application to determine if a json request { is_malicious: true } 
 This app is written in Python3 and uses the Flask web framework.
 
 # To Run and Test Locally:
-1. Download or clone http-waf
+1. Download or clone this repository.
 
 2. From root project directory, install pip project dependencies by executing:
 ```

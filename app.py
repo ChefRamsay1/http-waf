@@ -107,4 +107,6 @@ def traverse_object(obj, parent_key=None):
         yield parent_key, obj
 
 
-app.run()  # start the app
+
+if __name__ == '__main__': # encapsulate the run
+    app.run(debug=True) # start the app

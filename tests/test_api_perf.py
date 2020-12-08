@@ -1,16 +1,20 @@
 import pytest
 import json
 import requests
+import os
 
+BASE_URL = os.getenv('BASE_URL', default='http://localhost:5000')
+print("")
+print("testing against", BASE_URL)
 
 # Class to test performance of api.py
 # We use pytest-benchmark to perform run many iterations of the request
 # and benchmark the performance of the server.
-class TestApiPerformanceRemote:
+class TestApiPerformance:
 
     # Benchmark api with simple hidden malicious request.
     def test_request_forbid_perf_benchmark(self, benchmark):
-        url = 'https://http-firewall-wren.herokuapp.com/api/handle-request'
+        url = f'{BASE_URL}/api/handle-request'
         headers = {'Content-Type': 'application/json'}
 
         payload = json.dumps({
@@ -22,7 +26,7 @@ class TestApiPerformanceRemote:
 
     # Benchmark api with large complex non-malicious request
     def test_massive_request_ok_perf_benchmark(self, benchmark):
-        url = 'https://http-firewall-wren.herokuapp.com/api/handle-request'
+        url = f'{BASE_URL}/api/handle-request'
         headers = {'Content-Type': 'application/json'}
 
         payload = json.dumps([
@@ -304,4 +308,13 @@ class TestApiPerformanceRemote:
 
 
 # Result of running ./bin/test:
+# ------------------------------------------------------------------------------------------- benchmark: 2 tests -------------------------------------------------------------------------------------------
+# Name (time in ms)                             Min                 Max              Mean             StdDev            Median               IQR            Outliers       OPS            Rounds  Iterations
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# test_request_forbid_perf_benchmark         4.1670 (1.0)       13.7188 (1.0)      4.8911 (1.0)       0.8765 (1.0)      4.7168 (1.0)      0.5644 (1.0)           8;6  204.4529 (1.0)         178           1
+# test_massive_request_ok_perf_benchmark     4.4013 (1.06)     722.1281 (52.64)    9.6356 (1.97)     54.4919 (62.17)    5.3320 (1.13)     0.8068 (1.43)         1;11  103.7816 (0.51)        173           1
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Legend:
+#   Outliers: 1 Standard Deviation from Mean; 1.5 IQR (InterQuartile Range) from 1st Quartile and 3rd Quartile.
+#   OPS: Operations Per Second, computed as 1 / Mean

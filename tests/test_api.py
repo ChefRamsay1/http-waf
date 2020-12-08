@@ -1,13 +1,20 @@
 import pytest
 import json
 import requests
+import os
+
+BASE_URL = os.getenv('BASE_URL', default='http://localhost:5000')
+print("")
+print("testing against", BASE_URL)
+
+
 
 # Class to perform unit testing of api.py
 class TestApi:
 
     # Test simple malicious request.
     def test_simple_request(self):
-        url = 'http://localhost:5000/api/handle-request'
+        url = f'{BASE_URL}/api/handle-request'
         headers = {'Content-Type': 'application/json'}
 
         payload = json.dumps({
@@ -20,7 +27,7 @@ class TestApi:
 
     # Test simple non malicious request.
     def test_simple_request_ok(self):
-        url = 'http://localhost:5000/api/handle-request'
+        url = f'{BASE_URL}/api/handle-request'
         headers = {'Content-Type': 'application/json'}
 
         payload = json.dumps({
@@ -33,7 +40,7 @@ class TestApi:
 
     # Test empty body request.
     def test_empty_request(self):
-        url = 'http://localhost:5000/api/handle-request'
+        url = f'{BASE_URL}/api/handle-request'
         headers = {'Content-Type': 'application/json'}
 
         payload = json.dumps({
@@ -47,7 +54,7 @@ class TestApi:
 
     # Test hidden malicious request.
     def test_hidden_request(self):
-        url = 'http://localhost:5000/api/handle-request'
+        url = f'{BASE_URL}/api/handle-request'
         headers = {'Content-Type': 'application/json'}
 
         payload = json.dumps({
@@ -60,7 +67,7 @@ class TestApi:
 
     # Test nested malicious request.
     def test_nested_request(self):
-        url = 'http://localhost:5000/api/handle-request'
+        url = f'{BASE_URL}/api/handle-request'
         headers = {'Content-Type': 'application/json'}
 
         payload = json.dumps({
@@ -81,7 +88,7 @@ class TestApi:
 
     # Test nested non malicious request.
     def test_nested_request_ok(self):
-        url = 'http://localhost:5000/api/handle-request'
+        url = f'{BASE_URL}/api/handle-request'
         headers = {'Content-Type': 'application/json'}
 
         payload = json.dumps({
@@ -102,7 +109,7 @@ class TestApi:
 
     # Test strange nested non malicious request.
     def test_strange_request_ok(self):
-        url = 'http://localhost:5000/api/handle-request'
+        url = f'{BASE_URL}/api/handle-request'
         headers = {'Content-Type': 'application/json'}
 
         payload = json.dumps({
@@ -123,7 +130,7 @@ class TestApi:
 
     # Test is_malicious: Array, should return ok regardless of array value
     def test_request_array_ok(self):
-        url = 'http://localhost:5000/api/handle-request'
+        url = f'{BASE_URL}/api/handle-request'
         headers = {'Content-Type': 'application/json'}
 
         payload = json.dumps({
@@ -136,7 +143,7 @@ class TestApi:
 
     # Test malicious request in array.
     def test_request_array_forbid(self):
-        url = 'http://localhost:5000/api/handle-request'
+        url = f'{BASE_URL}/api/handle-request'
         headers = {'Content-Type': 'application/json'}
 
         payload = json.dumps({
@@ -149,7 +156,7 @@ class TestApi:
 
     # Test string value which evaluates to true.
     def test_request_array_ok_2(self):
-        url = 'http://localhost:5000/api/handle-request'
+        url = f'{BASE_URL}/api/handle-request'
         headers = {'Content-Type': 'application/json'}
 
         payload = json.dumps({
@@ -167,7 +174,7 @@ class TestApi:
     # to match instances of is_malicious: True in the raw json, which would return forbidden,
     # however the specification for this assignment would not forbid a request with { data: json.dumps({ is_malicious: True }) }.
     def test_request_encoded_malicious(self):
-        url = 'http://localhost:5000/api/handle-request'
+        url = f'{BASE_URL}/api/handle-request'
         headers = {'Content-Type': 'application/json'}
 
         payload = json.dumps({
@@ -181,7 +188,7 @@ class TestApi:
 
     # Test massive nested non malicious request.
     def test_massive_request_ok(self):
-        url = 'http://localhost:5000/api/handle-request'
+        url = f'{BASE_URL}/api/handle-request'
         headers = {'Content-Type': 'application/json'}
 
         payload = json.dumps([
@@ -463,7 +470,7 @@ class TestApi:
 
     # Test massive nested malicious request.
     def test_massive_request_forbid(self):
-        url = 'http://localhost:5000/api/handle-request'
+        url = f'{BASE_URL}/api/handle-request'
         headers = {'Content-Type': 'application/json'}
 
         payload = json.dumps([

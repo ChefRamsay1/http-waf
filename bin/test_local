@@ -1,3 +1,4 @@
 #!/bin/bash
 
-python3 -m pytest -s ./tests
+python3 -m pytest ./tests # run the tests ensuring python3 is used
+

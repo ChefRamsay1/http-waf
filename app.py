@@ -34,7 +34,7 @@ def home():
     return md_template_string
 
 # Function to handle 404 errors.
-# Simply displays
+# Simply displays instructions for connecting.
 @app.errorhandler(404)
 def page_not_found(e):
     return """<h1>404</h1><p>The resource could not be found.</p>
@@ -69,7 +69,7 @@ def handleRequest():
 # a generator function to find key value pairs with a depth first search order.
 # Generator computes values as needed rather than computing them all at once and returning as a list.
 # input: Object
-# output: list of key, value pairs
+# output: key, value pairs
 # key - a key or index in object mapped to a value
 # value - value in the object that is not a dictionary, list, or tuple
 # example:

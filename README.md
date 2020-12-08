@@ -8,9 +8,12 @@ This app is written in Python3 and uses the Flask web framework.
 
 # Specification
 The application represents a simple http firewall that processes requests and returns either 200 OK or 403 Forbidden. If there is a request with a JSON body with a key named is_malicious (either at the root of the JSON object or nested in a child object), [which is set to True] then the request should generate a 403 Forbidden response.
+
 Examples:
+
+```json
 {
-  "is_malicious": true,
+  "is_malicious": true
 } => 403 FORBIDDEN
 
 {
@@ -18,12 +21,13 @@ Examples:
 } => 403 Forbidden
 
 {
-  "is_malicious": false,
+  "is_malicious": false
 } => 200 OK
 
 {
   "data": null
 } => 200 OK
+```
 
 # handleRequest
 The function handle-request, as you would expect, handles requests! It supports any method in order to generalize for any possible http request. It first checks whether unpacking the body returns a ValueError, which yields a success as their is no { "is_malicious": true }. Then it traverses the JSON body using the generator function traverse_object. Instead of returning, this generator yields values as they are needed and avoids storing the entire unpacked object in memory. This improves performance as if the is_malicious flag is set near the beginning of a large object, we will return 403 Forbidden as soon as it is found.

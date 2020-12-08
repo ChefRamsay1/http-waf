@@ -4,6 +4,31 @@ A simple http application to determine if a json request { is_malicious: true } 
 
 This app is written in Python3 and uses the Flask web framework.
 
+
+
+# Specification
+The application represents a simple http firewall that processes requests and returns either 200 OK or 403 Forbidden. If there is a request with a JSON body with a key named is_malicious (either at the root of the JSON object or nested in a child object), [which is set to True] then the request should generate a 403 Forbidden response.
+Examples:
+{
+  "is_malicious": true,
+} => 403 FORBIDDEN
+
+{
+  "hidden": { "is_malicious": true }
+} => 403 Forbidden
+
+{
+  "is_malicious": false,
+} => 200 OK
+
+{
+  "data": null
+} => 200 OK
+
+# handleRequest
+The function handle-request, as you would expect, handles requests! It supports any method in order to generalize for any possible http request. It first checks whether unpacking the body returns a ValueError, which yields a success as their is no { "is_malicious": true }. Then it traverses the JSON body using the generator function traverse_object. Instead of returning, this generator yields values as they are needed and avoids storing the entire unpacked object in memory. This improves performance as if the is_malicious flag is set near the beginning of a large object, we will return 403 Forbidden as soon as it is found.
+
+
 # To Run and Test Locally:
 1. Download or clone this repository.
 
@@ -41,29 +66,6 @@ This app is written in Python3 and uses the Flask web framework.
 which executes unit tests and performance tests on the remote deployment of the app.
 (https://http-firewall-wren.herokuapp.com/)
 
-
-
-# Notes on app.py
-The application represents a simple http firewall that processes requests and returns either 200 OK or 403 Forbidden. If there is a request with a JSON body with a key named is_malicious (either at the root of the JSON object or nested in a child object), [which is set to True] then the request should generate a 403 Forbidden response.
-Examples:
-{
-  "is_malicious": true,
-} => 403 FORBIDDEN
-
-{
-  "hidden": { "is_malicious": true }
-} => 403 Forbidden
-
-{
-  "is_malicious": false,
-} => 200 OK
-
-{
-  "data": null
-} => 200 OK
-
-# handleRequest
-The function handle-request, as you would expect, handles requests! It supports any method in order to generalize for any possible http request. It first checks whether unpacking the body returns a ValueError, which yields a success as their is no { "is_malicious": true }. Then it traverses the JSON body using the generator function traverse_object. Instead of returning, this generator yields values as they are needed and avoids storing the entire unpacked object in memory. This improves performance as if the is_malicious flag is set near the beginning of a large object, we will return 403 Forbidden as soon as it is found.
 
 # Benchmark Results
 The application was performance tested using pytest-benchmark. This library calls our server many times and provides a stastic summary of its running times. This allows us to see the mean time in ms for each request and the number of Operations Per Second.

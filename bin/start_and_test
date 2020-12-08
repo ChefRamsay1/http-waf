@@ -3,5 +3,5 @@
 python3 app.py > /dev/null 2>&1 
 
 
-pytest ./tests
-# we then call pytest on our test suite to perform unit tests and benchmarking
+pytest ./tests_local
+# we then call pytest on our local test suite to perform unit tests and benchmarking

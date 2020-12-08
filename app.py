@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 from flask_api import status
 import sys
 import json
+import markdown.extensions.fenced_code
+
 
 # A simple HTTP service that will accept requests
 # and return either 200 OK or 403 Forbidden.
@@ -22,14 +24,14 @@ forbidden = {"status": "error", "code": 403,
              "message": "is_malicious found"}  # forbidden response body
 IS_MALICIOUS = "is_malicious"
 
-
+# Return the README.md file as the homepage
 @app.route('/', methods=['GET'])
 def home():
-    return """<h1>Simple Web Application Firewall</h1>
-                    <p>A simple HTTP service that will accept requests and return either 200 OK or 403 Forbidden</p>
-                    <p>To scan a request for "is_malicious" send POST request to .../api/handle-request</p>
-                    <p> ex: localhost:5000/api/handle-request with request body { "is_malicious": true } </p>"""
-
+    readme_file = open("README.md", "r")
+    md_template_string = markdown.markdown(
+        readme_file.read(), extensions=["fenced_code"]
+    )
+    return md_template_string
 
 # Function to handle 404 errors.
 # Simply displays
@@ -37,7 +39,7 @@ def home():
 def page_not_found(e):
     return """<h1>404</h1><p>The resource could not be found.</p>
                 <p>To scan a request for "is_malicious" send POST request to .../api/handle-request</p>
-                    <p> ex: localhost:5000/api/handle-request with request body { "is_malicious": true } </p>""", 404
+                    <p> ex: localhost:5000/api/handle-request with request body { "is_malicious": true/false } </p>""", 404
 
 # Function to act as Web Application Firewall, handles http requests.
 # if request body contains { "is_malicious": true }

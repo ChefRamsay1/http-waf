@@ -12,15 +12,21 @@ This app is written in Python3 and uses the Flask web framework.
 ./bin/setup
 ```
 
-3. To run locally, from root project directory execute:
+3. To start AND run locally, with silenced output from app.py, from root project directory execute:
+```
+./bin/start_and_test
+```
+
+4. To run locally, from root project directory execute:
 ```
 ./bin/start_server_local
 ```
-///TODO maybe combine this into the same step
-4. Then, to run unit tests and performance tests locally, from root project directory execute:
+
+5. Then, to run unit tests and performance tests locally, from root project directory execute:
 ```
 ./bin/test_local
 ```
+ 
 
 # To Run and Test Remotely:
 1. Ensure pip project dependencies are installed by executing:

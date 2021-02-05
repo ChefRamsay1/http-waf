@@ -1,0 +1,5 @@
+#!/bin/bash
+
+python3 -m pip install -r requirements.txt
+
+# This script installs all dependencies for the project ensuring python3 is used.

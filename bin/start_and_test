@@ -1,0 +1,7 @@
+#!/bin/bash
+
+python3 app.py > /dev/null 2>&1 # run app redirecting output to /dev/null which discards it, then redirects stderror to stdout silencing all output even errors
+
+
+python3 -m pytest ./tests_local
+# we then call pytest on our local test suite to perform unit tests and benchmarking

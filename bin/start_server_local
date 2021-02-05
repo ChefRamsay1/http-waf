@@ -1,0 +1,10 @@
+#!/bin/bash
+
+python3 app.py > /dev/null 
+
+# redirects program output to /dev/null which accepts and discards all input (produces no output)
+
+
+
+
+

@@ -16,10 +16,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.6.2
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.6.2
     - name: Install dependencies
       run: |
         ./bin/setup
@@ -32,6 +28,6 @@ jobs:
     - name: Run Pytest-Benchmark
       run: |
         ./bin/start_server_local
-        python3 -m pytest ./tests output.json
+        python3 -m pytest ./tests
     - name: Comment with Pytest-Benchmark Result
       uses: nils-braun/pytest-benchmark-commenter@v2.0.2
